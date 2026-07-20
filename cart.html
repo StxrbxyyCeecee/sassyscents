@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Your Cart | Scents</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --cream:#FAF7F1; --ink:#1A1418; --black:#0E0C10; --gold:#C7A052; }
+  *{box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif; background:var(--cream); color:var(--ink);}
+  .font-voice{font-family:'Cormorant Garamond', serif;}
+  .bg-ink{background-color:var(--black);}
+  .text-gold{color:var(--gold);}
+  .bg-gold{background-color:var(--gold);}
+  nav a{transition:all .3s ease;}
+  nav a:hover{color:var(--gold);}
+  .glass-button{
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(18px) saturate(180%); -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.28); color:#fff; transition: all .3s ease;
+  }
+  .glass-button:hover{ background: rgba(255,255,255,0.2); border-color: rgba(199,160,82,0.7); transform: translateY(-2px); }
+  .glass-dark{
+    background: rgba(14,12,16,0.55);
+    backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .glass{
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 8px 32px rgba(20,16,20,0.06);
+  }
+  .glass-circle{
+    width:42px; height:42px; border-radius:50%;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.25);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; cursor:pointer; transition: all .25s ease;
+  }
+  .glass-circle:hover{ background: rgba(255,255,255,0.28); transform: translateY(-1px); }
+  .top-bar{ background:var(--black); color:#cfc7cc; font-size:12px; }
+  .row-pic{ width:88px; height:88px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .row-pic img{ max-width:100%; max-height:100%; object-fit:contain; }
+  .img-placeholder{
+    width:100%; height:100%; border:1.5px dashed rgba(120,110,100,.4); border-radius:12px;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:8.5px; letter-spacing:.05em; text-transform:uppercase; color:rgba(120,110,100,.75); padding:.4rem;
+  }
+  .qty-btn{
+    width:28px; height:28px; border-radius:999px; border:1px solid rgba(0,0,0,.15);
+    background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px;
+  }
+  .qty-btn:hover{ background: rgba(255,255,255,0.85); }
+  .cta-pill{
+    font-family:'Jost',sans-serif; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase;
+    border:none; padding:15px 30px; border-radius:999px; cursor:pointer; color:#fff; background:var(--ink);
+    transition: transform 220ms ease, opacity 220ms ease; width:100%;
+  }
+  .cta-pill:hover{ transform: translateY(-2px); opacity:.92; }
+  .cta-pill:disabled{ opacity:.4; cursor:not-allowed; transform:none; }
+</style>
+</head>
+<body class="selection:bg-purple-800 selection:text-white">
+
+<!-- Top bar -->
+<div class="top-bar fixed top-0 left-0 w-full z-50 py-2 px-6">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <span>Free delivery on orders over R500 · Code <strong class="text-gold">SCENTS10</strong> for 10% off</span>
+    <span class="hidden sm:flex gap-4"><a href="index.html#contact" class="hover:text-gold">Contact Us</a></span>
+  </div>
+</div>
+
+<header class="glass-dark fixed left-0 w-full z-40" style="top:32px;">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="index.html" class="font-voice text-2xl tracking-wide text-white">SCENTS<span class="text-gold">.</span></a>
+    <nav class="flex items-center gap-3 text-white text-sm tracking-wide">
+      <a href="index.html" class="hidden sm:inline hover:text-gold">Home</a>
+      <a href="shop.html" class="hidden sm:inline hover:text-gold">Shop</a>
+      <a href="cart.html" class="glass-circle relative" aria-label="View cart">
+        <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l.4 2M7 13h10l3-8H5.4M7 13L5.4 5M7 13l-1.5 6h11.5M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span class="cart-count absolute -top-1.5 -right-1.5 bg-gold text-black text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main class="pt-40 pb-28 px-6 bg-cream min-h-screen">
+  <div class="max-w-5xl mx-auto">
+    <h1 class="font-voice text-4xl font-semibold mb-2">Your Cart</h1>
+    <p class="text-xs tracking-[.2em] uppercase text-gray-500 mb-10"><a href="index.html" class="hover:text-gold">Home</a> / Cart</p>
+
+    <div id="cartWrap" class="grid md:grid-cols-3 gap-10 items-start"></div>
+  </div>
+</main>
+
+<footer class="border-t border-white/10 bg-ink text-gray-400 pt-10 pb-8">
+  <div class="max-w-6xl mx-auto px-6 text-center text-xs text-gray-500">
+    <p>&copy; 2026 Scents.</p>
+  </div>
+</footer>
+
+<script>
+  const PRODUCTS = [
+    { id:"oud-al-layl", name:"Oud Al Layl", price:120, notes:"Rose · Saffron · Oud", img:"Screenshot 2026-05-03 150950.png", tagBg:"#0E0C10" },
+    { id:"glamourous", name:"Glamourous", price:200, notes:"Floral · Fruity · Feminine", img:"Screenshot 2026-05-03 150950.png", tagBg:"#7D3352" },
+    { id:"rich-man", name:"Rich Man", price:150, notes:"Fresh · Aquatic · Citrus", img:"Screenshot 2026-05-03 150950.png", tagBg:"#241C10" },
+    { id:"stunner", name:"Stunner", price:100, notes:"Floral · Fruity · Soft", img:"Screenshot 2026-05-03 150950.png", tagBg:"#4B1F6E" }
+  ];
+
+  function getCart(){ try{ return JSON.parse(localStorage.getItem('scents_cart')||'[]'); }catch(e){ return []; } }
+  function saveCart(c){ try{ localStorage.setItem('scents_cart', JSON.stringify(c)); }catch(e){} }
+  function cartCount(){ return getCart().reduce((s,i)=>s+i.qty,0); }
+  function updateCartBadge(){ document.querySelectorAll('.cart-count').forEach(el=> el.textContent = cartCount()); }
+
+  function removeFromCart(id){
+    saveCart(getCart().filter(i=>i.id!==id));
+    render();
+  }
+  function setQty(id, newQty){
+    const c = getCart();
+    const item = c.find(i=>i.id===id);
+    if(!item) return;
+    if(newQty <= 0){ return removeFromCart(id); }
+    item.qty = newQty;
+    saveCart(c);
+    render();
+  }
+
+  const DELIVERY_FLAT = 60;
+  const FREE_DELIVERY_THRESHOLD = 500;
+
+  function render(){
+    const cart = getCart();
+    const wrap = document.getElementById('cartWrap');
+    updateCartBadge();
+
+    if(cart.length === 0){
+      wrap.innerHTML = `
+        <div class="md:col-span-3 text-center py-20">
+          <p class="text-gray-500 mb-6">Your cart is empty.</p>
+          <a href="shop.html" class="cta-pill inline-block w-auto px-10">Continue Shopping</a>
+        </div>`;
+      return;
+    }
+
+    const items = cart.map(ci => ({ ...PRODUCTS.find(p=>p.id===ci.id), qty: ci.qty }));
+    const subtotal = items.reduce((s,i)=> s + i.price * i.qty, 0);
+    const delivery = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FLAT;
+    const total = subtotal + delivery;
+
+    wrap.innerHTML = `
+      <div class="md:col-span-2 space-y-5">
+        ${items.map(i => `
+          <div class="flex items-center gap-4 glass rounded-2xl p-4">
+            <div class="row-pic" style="background:${i.tagBg}12;">
+              ${i.img ? `<img src="${i.img}" alt="${i.name}">` : `<div class="img-placeholder">Add<br>image</div>`}
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-voice text-lg font-semibold truncate">${i.name}</h3>
+              <p class="text-xs uppercase tracking-wide text-gray-500 mb-2 truncate">${i.notes}</p>
+              <div class="flex items-center gap-3">
+                <button class="qty-btn" onclick="setQty('${i.id}', ${i.qty - 1})">−</button>
+                <span class="w-5 text-center text-sm">${i.qty}</span>
+                <button class="qty-btn" onclick="setQty('${i.id}', ${i.qty + 1})">+</button>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-semibold">R${i.price * i.qty}</p>
+              <button onclick="removeFromCart('${i.id}')" class="text-xs text-gray-400 hover:text-red-500 mt-2">Remove</button>
+            </div>
+          </div>
+        `).join('')}
+        <a href="shop.html" class="inline-block text-sm underline underline-offset-4 text-gray-600 hover:text-gold">← Continue Shopping</a>
+      </div>
+
+      <div class="glass rounded-2xl p-6 sticky" style="top:108px;">
+        <h2 class="font-voice text-2xl font-semibold mb-5">Order Summary</h2>
+        <div class="space-y-2 text-sm text-gray-600 mb-4">
+          <div class="flex justify-between"><span>Subtotal</span><span>R${subtotal}</span></div>
+          <div class="flex justify-between"><span>Delivery</span><span>${delivery === 0 ? 'Free' : 'R' + delivery}</span></div>
+          ${delivery > 0 ? `<p class="text-xs text-gray-400">Free delivery on orders over R${FREE_DELIVERY_THRESHOLD}</p>` : ''}
+        </div>
+        <div class="flex justify-between font-semibold text-lg border-t border-black/10 pt-4 mb-6">
+          <span>Total</span><span>R${total}</span>
+        </div>
+        <button class="cta-pill" onclick="location.href='checkout.html'">Proceed to Checkout</button>
+      </div>
+    `;
+  }
+
+  render();
+</script>
+</body>
+</html>

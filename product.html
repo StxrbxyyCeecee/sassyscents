@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title id="pageTitle">Fragrance | Scents</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Cormorant:ital,wght@0,500;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF7F1; --ink:#1A1418; --black:#0E0C10;
+    --purple:#4B1F6E; --gold:#C7A052; --pink:#C9678A;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif; background:var(--cream); color:var(--ink);}
+  .font-voice{font-family:'Cormorant Garamond', serif;}
+  .desc-line{font-family:'Cormorant', serif; font-style:italic;}
+  .bg-ink{background-color:var(--black);}
+  .text-gold{color:var(--gold);}
+  .bg-gold{background-color:var(--gold);}
+  nav a{transition:all .3s ease;}
+  nav a:hover{color:var(--gold);}
+  .glass-button{
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(18px) saturate(180%); -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.28); color:#fff; transition: all .3s ease;
+  }
+  .glass-button:hover{ background: rgba(255,255,255,0.2); border-color: rgba(199,160,82,0.7); transform: translateY(-2px); }
+  .glass-dark{
+    background: rgba(14,12,16,0.55);
+    backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .glass-circle{
+    width:42px; height:42px; border-radius:50%;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.25);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; cursor:pointer; transition: all .25s ease;
+  }
+  .glass-circle:hover{ background: rgba(255,255,255,0.28); transform: translateY(-1px); }
+  .top-bar{ background:var(--black); color:#cfc7cc; font-size:12px; }
+
+  .pic-panel{
+    border-radius:28px; display:flex; align-items:center; justify-content:center;
+    padding:3rem; min-height:380px; position:relative;
+    border: 1px solid rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px) saturate(160%); -webkit-backdrop-filter: blur(10px) saturate(160%);
+    box-shadow: 0 8px 32px rgba(20,16,20,0.06);
+  }
+  .pic-panel img{ max-width:100%; max-height:360px; object-fit:contain; filter: drop-shadow(0 26px 30px rgba(0,0,0,.2)); }
+  .img-placeholder{
+    width:100%; min-height:240px;
+    border:1.5px dashed rgba(120,110,100,.4); border-radius:16px;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(120,110,100,.75);
+    padding:1rem;
+  }
+  .qty-btn{
+    width:36px; height:36px; border-radius:999px; border:1px solid rgba(0,0,0,.15);
+    background: rgba(255,255,255,0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px;
+    transition: background .2s ease;
+  }
+  .qty-btn:hover{ background: rgba(255,255,255,0.8); }
+  .cta-pill{
+    font-family:'Jost',sans-serif; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase;
+    border:none; padding:15px 30px; border-radius:999px; cursor:pointer; color:#fff;
+    transition: transform 220ms ease, opacity 220ms ease;
+  }
+  .cta-pill:hover{ transform: translateY(-2px); opacity:.92; }
+  .mini-card{
+    background: rgba(255,255,255,0.6); backdrop-filter: blur(14px) saturate(180%); -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.6); border-radius:16px; overflow:hidden;
+    box-shadow: 0 8px 24px rgba(20,16,20,0.06);
+  }
+  .mini-pic{ aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; padding:1rem; }
+  .mini-pic img{ max-width:100%; max-height:100%; object-fit:contain; }
+</style>
+</head>
+<body class="selection:bg-purple-800 selection:text-white">
+
+<!-- Top bar -->
+<div class="top-bar fixed top-0 left-0 w-full z-50 py-2 px-6">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <span>Free delivery on orders over R500 · Code <strong class="text-gold">SCENTS10</strong> for 10% off</span>
+    <span class="hidden sm:flex gap-4"><a href="cart.html" class="hover:text-gold">Track Order</a><span>|</span><a href="index.html#contact" class="hover:text-gold">Contact Us</a></span>
+  </div>
+</div>
+
+<!-- Navigation -->
+<header class="glass-dark fixed left-0 w-full z-40" style="top:32px;">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="index.html" class="font-voice text-2xl tracking-wide text-white">SCENTS<span class="text-gold">.</span></a>
+    <nav class="hidden md:flex items-center space-x-8 text-white text-sm tracking-wide">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="text-gold">Shop</a>
+      <a href="index.html#why">Why Scents</a>
+      <a href="index.html#visit">Delivery</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <a href="cart.html" class="glass-circle relative" aria-label="View cart">
+        <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l.4 2M7 13h10l3-8H5.4M7 13L5.4 5M7 13l-1.5 6h11.5M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span class="cart-count absolute -top-1.5 -right-1.5 bg-gold text-black text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+      </a>
+      <button id="mobile-menu-button" class="glass-circle md:hidden" aria-label="Toggle menu">
+        <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden glass-dark mx-4 mb-4 rounded-2xl py-6 px-6 space-y-5 text-center">
+    <a href="index.html" class="block text-white hover:text-gold">Home</a>
+    <a href="shop.html" class="block text-white hover:text-gold">Shop</a>
+    <a href="index.html#why" class="block text-white hover:text-gold">Why Scents</a>
+    <a href="index.html#visit" class="block text-white hover:text-gold">Delivery</a>
+    <a href="index.html#contact" class="block text-white hover:text-gold">Contact</a>
+    <a href="cart.html" class="block text-white hover:text-gold">Cart (<span class="cart-count">0</span>)</a>
+  </div>
+</header>
+
+<main class="pt-40 pb-28 px-6 bg-cream">
+  <div class="max-w-6xl mx-auto">
+    <p class="text-xs tracking-[.2em] uppercase text-gray-500 mb-8" id="breadcrumb">
+      <a href="index.html" class="hover:text-gold">Home</a> / <a href="shop.html" class="hover:text-gold">Shop</a> / <span id="crumbName">…</span>
+    </p>
+
+    <div id="productRoot" class="grid md:grid-cols-2 gap-14 items-start"></div>
+
+    <!-- Related -->
+    <div class="mt-28">
+      <h2 class="font-voice text-3xl font-semibold mb-8 text-center">You May Also Like</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6" id="relatedGrid"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-white/10 bg-ink text-gray-400 pt-16 pb-8">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14 text-sm">
+      <div>
+        <h4 class="text-white font-semibold mb-4">Get to Know Us</h4>
+        <ul class="space-y-3"><li><a href="index.html" class="hover:text-gold">Our Story</a></li><li><a href="index.html#visit" class="hover:text-gold">Delivery & Returns</a></li></ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4">The Collection</h4>
+        <ul class="space-y-3">
+          <li><a href="product.html?id=oud-al-layl" class="hover:text-gold">Oud Al Layl</a></li>
+          <li><a href="product.html?id=glamourous" class="hover:text-gold">Glamourous</a></li>
+          <li><a href="product.html?id=rich-man" class="hover:text-gold">Rich Man</a></li>
+          <li><a href="product.html?id=stunner" class="hover:text-gold">Stunner</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4">Visit & Delivery</h4>
+        <ul class="space-y-3"><li><a href="index.html#visit" class="hover:text-gold">Cape Town</a></li><li><a href="index.html#visit" class="hover:text-gold">Durban</a></li><li><a href="index.html#visit" class="hover:text-gold">Johannesburg</a></li></ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4">Client Care</h4>
+        <ul class="space-y-3"><li><a href="index.html#contact" class="hover:text-gold">Contact Us</a></li><li><a href="cart.html" class="hover:text-gold">View Cart</a></li></ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 mt-8 pt-6 text-center text-xs text-gray-500"><p>&copy; 2026 Scents.</p></div>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+
+  const PRODUCTS = [
+    { id:"oud-al-layl", name:"Oud Al Layl", category:"Unisex", price:120, notes:"Rose · Saffron · Oud",
+      desc:"A rich, smoky oud built for the nights you want to be remembered.",
+      story:"A warm, oriental oud fragrance layered with rose and saffron over a deep, smoky agarwood base. Bold and long-lasting — this is the bottle people ask about.",
+      img:"", tagBg:"#0E0C10", panelTint:"#0E0C10" },
+    { id:"glamourous", name:"Glamourous", category:"Women", price:200, notes:"Floral · Fruity · Feminine",
+      desc:"Bright and feminine, with enough depth to carry through the evening.",
+      story:"A bold floral-fruity eau de parfum in a statement pink bottle. Sweet on first spray, with a bouquet that lingers well past the first hour.",
+      img:"", tagBg:"#7D3352", panelTint:"#7D3352" },
+    { id:"rich-man", name:"Rich Man", category:"Men", price:150, notes:"Fresh · Aquatic · Citrus",
+      desc:"A clean, everyday pour homme that layers well under anything.",
+      story:"A crisp, fresh pour homme built on aquatic and citrus notes. Easy to wear year-round — the fragrance you reach for when you can't decide.",
+      img:"", tagBg:"#241C10", panelTint:"#9C7A2E" },
+    { id:"stunner", name:"Stunner", category:"Women", price:100, notes:"Floral · Fruity · Soft",
+      desc:"Light enough for daytime, sweet enough to be remembered.",
+      story:"A soft, playful floral fragrance with a fruity edge. Our most affordable bottle in the case, and one of the easiest to fall for.",
+      img:"", tagBg:"#4B1F6E", panelTint:"#4B1F6E" }
+  ];
+
+  function getCart(){ try{ return JSON.parse(localStorage.getItem('scents_cart')||'[]'); }catch(e){ return []; } }
+  function saveCart(c){ try{ localStorage.setItem('scents_cart', JSON.stringify(c)); }catch(e){} }
+  function addToCart(id, qty=1){
+    const c = getCart();
+    const item = c.find(i=>i.id===id);
+    if(item) item.qty += qty; else c.push({id, qty});
+    saveCart(c);
+    updateCartBadge();
+  }
+  function cartCount(){ return getCart().reduce((s,i)=>s+i.qty,0); }
+  function updateCartBadge(){ document.querySelectorAll('.cart-count').forEach(el=> el.textContent = cartCount()); }
+
+  const params = new URLSearchParams(location.search);
+  const requestedId = params.get('id');
+  const product = PRODUCTS.find(p=>p.id === requestedId) || PRODUCTS[0];
+  let qty = 1;
+
+  document.getElementById('pageTitle').textContent = `${product.name} | Scents`;
+  document.getElementById('crumbName').textContent = product.name;
+
+  document.getElementById('productRoot').innerHTML = `
+    <div class="pic-panel" style="background: radial-gradient(circle at 40% 30%, ${product.panelTint}18, transparent 65%), linear-gradient(160deg, ${product.panelTint}0a, transparent);">
+      ${product.img ? `<img src="${product.img}" alt="${product.name} bottle">` : `<div class="img-placeholder">Add image for<br>${product.name}</div>`}
+    </div>
+    <div>
+      <span class="tag text-xs uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-4" style="background:${product.tagBg}18; color:${product.tagBg};">${product.category}</span>
+      <h1 class="font-voice text-4xl md:text-5xl font-semibold mb-3">${product.name}</h1>
+      <p class="text-xs tracking-[.14em] uppercase text-gray-500 mb-4">${product.notes}</p>
+      <p class="desc-line text-lg text-gray-700 mb-2">${product.desc}</p>
+      <p class="text-gray-600 leading-relaxed mb-6">${product.story}</p>
+      <p class="text-3xl font-semibold mb-6">R${product.price}</p>
+
+      <div class="flex items-center gap-4 mb-6">
+        <div class="flex items-center gap-3">
+          <button class="qty-btn" id="qtyMinus">−</button>
+          <span id="qtyValue" class="w-6 text-center font-medium">1</span>
+          <button class="qty-btn" id="qtyPlus">+</button>
+        </div>
+        <button class="cta-pill" id="addBtn" style="background:${product.tagBg};">Add to Cart</button>
+      </div>
+
+      <div class="border-t border-black/10 pt-5 text-sm text-gray-600 space-y-2">
+        <p>📦 In stock — <strong>Cape Town</strong>, <strong>Durban</strong>, <strong>Johannesburg</strong></p>
+        <p>🚚 Order today, most areas get it tomorrow</p>
+        <p>↩️ Easy returns within 7 days if unopened</p>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('qtyMinus').addEventListener('click', ()=>{ qty = Math.max(1, qty-1); document.getElementById('qtyValue').textContent = qty; });
+  document.getElementById('qtyPlus').addEventListener('click', ()=>{ qty += 1; document.getElementById('qtyValue').textContent = qty; });
+  document.getElementById('addBtn').addEventListener('click', function(){
+    addToCart(product.id, qty);
+    this.textContent = 'Added ✓';
+    setTimeout(()=>{ this.textContent = 'Add to Cart'; }, 1400);
+  });
+
+  document.getElementById('relatedGrid').innerHTML = PRODUCTS.filter(p=>p.id !== product.id).map(p => `
+    <a href="product.html?id=${p.id}" class="mini-card block">
+      <div class="mini-pic" style="background: radial-gradient(circle at 40% 30%, ${p.panelTint}14, transparent 65%);">
+        ${p.img ? `<img src="${p.img}" alt="${p.name}">` : `<div class="img-placeholder text-[10px]">Add image</div>`}
+      </div>
+      <div class="p-4">
+        <h3 class="font-voice text-lg font-semibold mb-1">${p.name}</h3>
+        <p class="text-sm text-gray-600">R${p.price}</p>
+      </div>
+    </a>
+  `).join('');
+
+  updateCartBadge();
+</script>
+</body>
+</html>

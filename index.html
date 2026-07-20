@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Scents | Fragrances Worth Talking About</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Cormorant:ital,wght@0,500;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF7F1;
+    --ink:#1A1418;
+    --black:#0E0C10;
+    --purple:#4B1F6E;
+    --gold:#C7A052;
+    --gold-soft:#E4CE9C;
+    --pink:#C9678A;
+
+    --bg-a:#0B0B0D; --bg-b:#1C1712; --bg-c:#2B220F;
+    --hero-ink:#F3EEDF; --hero-accent:#D4AF37; --hero-sub:#B9AE93;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif; background:var(--cream); color:var(--ink);}
+  .font-voice{font-family:'Cormorant Garamond', serif;}
+  .bg-ink{background-color:var(--black);}
+  .text-gold{color:var(--gold);}
+  .bg-gold{background-color:var(--gold);}
+  .border-gold{border-color:var(--gold);}
+
+  .glass-card{
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 8px 32px rgba(20,16,20,0.08);
+  }
+  .glass-button{
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.28);
+    color: #fff;
+    transition: all .3s ease;
+  }
+  .glass-button:hover{
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(199,160,82,0.7);
+    transform: translateY(-2px);
+  }
+  .glass-dark{
+    background: rgba(14,12,16,0.55);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .glass-circle{
+    width:42px; height:42px; border-radius:50%;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.25);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; cursor:pointer; transition: all .25s ease;
+  }
+  .glass-circle:hover{ background: rgba(255,255,255,0.28); transform: translateY(-1px); }
+  .top-bar{ background:var(--black); color:#cfc7cc; font-size:12px; }
+  nav a{transition:all .3s ease;}
+  nav a:hover{color:var(--gold);}
+
+  /* ---------- hero / carousel ---------- */
+  .hero-stage{
+    position:relative;
+    overflow:hidden;
+    background: linear-gradient(135deg, var(--bg-a) 0%, var(--bg-b) 55%, var(--bg-c) 100%);
+    transition: background 900ms cubic-bezier(.4,0,.2,1), color 900ms ease;
+    color: var(--hero-ink);
+  }
+  .grain{
+    position:absolute; inset:0; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .steam-layer{position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:3;}
+  .wisp{
+    position:absolute; bottom:-12%; left:-14%; width:60vmax; height:60vmax; border-radius:50%;
+    background:radial-gradient(circle at 40% 60%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 35%, rgba(255,255,255,0) 68%);
+    filter:blur(18px); opacity:0; transform: translate(0,0) scale(.7) rotate(0deg);
+  }
+  .wisp.w2{
+    width:44vmax; height:44vmax; bottom:-18%; left:-22%;
+    background:radial-gradient(circle at 45% 55%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0) 70%);
+    filter:blur(24px);
+  }
+  .steam-active .wisp{animation: steamRise 1100ms cubic-bezier(.2,.6,.3,1) forwards;}
+  .steam-active .wisp.w2{animation-name: steamRise2; animation-duration:1300ms;}
+  @keyframes steamRise{
+    0%{opacity:0; transform:translate(0,0) scale(.6) rotate(0deg);}
+    18%{opacity:.85;} 55%{opacity:.55;}
+    100%{opacity:0; transform:translate(78vw,-72vh) scale(1.5) rotate(18deg);}
+  }
+  @keyframes steamRise2{
+    0%{opacity:0; transform:translate(0,0) scale(.5) rotate(0deg);}
+    22%{opacity:.6;} 60%{opacity:.35;}
+    100%{opacity:0; transform:translate(86vw,-80vh) scale(1.7) rotate(-12deg);}
+  }
+
+  .medallion{
+    width:64px; height:64px; border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background: radial-gradient(circle at 35% 30%, #fff8e8 0%, var(--gold-soft) 35%, var(--gold) 75%, #8a6a2c 100%);
+    border:1px solid rgba(255,255,255,.5);
+    box-shadow: 0 4px 18px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.25);
+    transition: transform 700ms cubic-bezier(.34,1.56,.64,1);
+  }
+  .steam-active .medallion{transform: rotate(360deg);}
+  .medallion svg{width:34px; height:34px;}
+  .wordmark{font-family:'Cormorant Garamond', serif; letter-spacing:.42em; font-size:15px; font-weight:500; padding-left:.42em;}
+
+  .carousel{position:relative; touch-action: pan-y; user-select:none;}
+  .bottle-stage{position:relative; display:flex; align-items:center; justify-content:center; min-height:300px;}
+  .bottle-slot{
+    position:absolute; width:min(56vw, 230px); display:flex; justify-content:center; align-items:flex-end; height:280px;
+    transition: opacity 650ms ease, transform 650ms cubic-bezier(.4,0,.2,1);
+    opacity:0; transform: translateX(40px) scale(.92); pointer-events:none;
+  }
+  .bottle-slot.active{opacity:1; transform: translateX(0) scale(1); pointer-events:auto;}
+  .bottle-slot.prev{transform: translateX(-60px) scale(.9);}
+  .bottle-slot.next{transform: translateX(60px) scale(.9);}
+  .bottle-slot img{max-width:100%; max-height:280px; object-fit:contain; filter: drop-shadow(0 22px 26px rgba(0,0,0,.4));}
+
+  .eyebrow{display:block; font-size:11px; letter-spacing:.3em; color:var(--hero-accent); opacity:.9; margin-bottom:10px; font-weight:500;}
+  .fragrance-name{font-family:'Cormorant Garamond', serif; font-size:clamp(30px,6.5vw,44px); line-height:1.05; font-weight:600;}
+  .notes-line{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--hero-sub);}
+  .desc-line{font-family:'Cormorant', serif; font-style:italic; font-size:16px; line-height:1.5; color:var(--hero-ink); opacity:.85;}
+  .cta-pill{
+    font-family:'Jost',sans-serif; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase;
+    background:var(--hero-ink); color:var(--bg-a); border:none; padding:13px 26px; border-radius:999px; cursor:pointer;
+    transition: transform 220ms ease, opacity 220ms ease, background 700ms ease, color 700ms ease;
+  }
+  .cta-pill:hover{transform: translateY(-2px); opacity:.92;}
+  .dots{display:flex; gap:9px; justify-content:center;}
+  .dot{width:7px;height:7px;border-radius:50%; background:currentColor; opacity:.28; cursor:pointer; transition: all 300ms ease; border:none; padding:0;}
+  .dot.active{opacity:.95; width:20px; border-radius:4px;}
+  .swipe-hint{font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--hero-sub); opacity:.7;}
+  .swipe-hint .arrows{display:inline-flex; gap:2px; animation:nudge 1.8s ease-in-out infinite;}
+  @keyframes nudge{0%,100%{transform:translateX(0);} 50%{transform:translateX(4px);}}
+  .arrow-btn{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:5; width:38px;height:38px; border-radius:50%;
+    border:1px solid currentColor; opacity:.4; background:transparent; color:var(--hero-ink);
+    display:flex;align-items:center;justify-content:center; cursor:pointer; transition: opacity 200ms ease;
+  }
+  .arrow-btn:hover{opacity:.8;}
+  @media (max-width:640px){.arrow-btn{display:none;}}
+
+  .detail-pic{
+    border-radius: 24px;
+    display:flex; align-items:center; justify-content:center;
+    padding: 2.5rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .detail-pic img{
+    max-width:100%; max-height:340px; object-fit:contain;
+    filter: drop-shadow(0 24px 28px rgba(0,0,0,.18));
+    position:relative; z-index:1;
+  }
+  .img-placeholder{
+    width:100%; min-height:220px;
+    border:1.5px dashed rgba(120,110,100,.4);
+    border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color:rgba(120,110,100,.75);
+    padding:1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .wisp,.medallion,.cta-pill,.bottle-slot{transition:none !important; animation:none !important;}
+  }
+</style>
+</head>
+<body class="selection:bg-purple-800 selection:text-white">
+
+<!-- Top bar -->
+<div class="top-bar fixed top-0 left-0 w-full z-50 py-2 px-6">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <span>Free delivery on orders over R500 · Code <strong class="text-gold">SCENTS10</strong> for 10% off</span>
+    <span class="hidden sm:flex gap-4"><a href="cart.html" class="hover:text-gold">Track Order</a><span>|</span><a href="#contact" class="hover:text-gold">Contact Us</a></span>
+  </div>
+</div>
+
+<!-- Navigation -->
+<header class="glass-dark fixed left-0 w-full z-40" style="top:32px;">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center text-white">
+      <span class="font-voice text-2xl tracking-wide">SCENTS<span class="text-gold">.</span></span>
+    </div>
+
+    <nav class="hidden md:flex items-center space-x-8 text-white text-sm tracking-wide">
+      <a href="index.html" class="text-gold">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="index.html#why">Why Scents</a>
+      <a href="index.html#visit">Delivery</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="cart.html" class="glass-circle relative" aria-label="View cart">
+        <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l.4 2M7 13h10l3-8H5.4M7 13L5.4 5M7 13l-1.5 6h11.5M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span class="cart-count absolute -top-1.5 -right-1.5 bg-gold text-black text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+      </a>
+      <button onclick="location.href='shop.html'" class="hidden sm:inline-block glass-button px-6 py-2 rounded-full text-xs uppercase tracking-widest">Shop Now</button>
+      <button id="mobile-menu-button" class="glass-circle md:hidden" aria-label="Toggle menu">
+        <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden glass-dark mx-4 mb-4 rounded-2xl py-6 px-6 space-y-5 text-center">
+    <a href="index.html" class="block text-white hover:text-gold">Home</a>
+    <a href="shop.html" class="block text-white hover:text-gold">Shop</a>
+    <a href="index.html#why" class="block text-white hover:text-gold">Why Scents</a>
+    <a href="index.html#visit" class="block text-white hover:text-gold">Delivery</a>
+    <a href="index.html#contact" class="block text-white hover:text-gold">Contact</a>
+    <a href="cart.html" class="block text-white hover:text-gold">Cart (<span class="cart-count">0</span>)</a>
+    <button onclick="location.href='shop.html'" class="w-full px-6 py-3 glass-button rounded-full uppercase text-xs tracking-widest">Shop Now</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="home" class="hero-stage min-h-screen flex flex-col items-center justify-between pt-40 pb-10 px-6" data-theme="0">
+  <div class="grain"></div>
+  <div class="steam-layer" id="steamLayer">
+    <div class="wisp w1"></div>
+    <div class="wisp w2"></div>
+  </div>
+
+  <div class="relative z-10 flex flex-col items-center gap-2">
+    <div class="medallion" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18.5" stroke="#5c431a" stroke-width="0.6" opacity="0.5"/>
+        <path d="M20 8 L23.5 16.2 L32.4 17 L25.6 22.9 L27.6 31.6 L20 26.9 L12.4 31.6 L14.4 22.9 L7.6 17 L16.5 16.2 Z"
+              fill="none" stroke="#4a3212" stroke-width="1.1" stroke-linejoin="round"/>
+        <circle cx="20" cy="20" r="3.2" fill="#4a3212"/>
+      </svg>
+    </div>
+    <div class="wordmark">SCENTS</div>
+  </div>
+
+  <div class="carousel relative z-10 w-full max-w-md flex flex-col items-center gap-6" id="carousel">
+    <div class="bottle-stage w-full" id="bottleStage"></div>
+
+    <div class="text-center w-full">
+      <span class="eyebrow" id="eyebrow">01 / 04</span>
+      <h1 class="fragrance-name mb-2" id="fragranceName">OUD AL LAYL</h1>
+      <p class="notes-line mb-3" id="notes">Rose · Saffron · Oud</p>
+      <p class="desc-line max-w-sm mx-auto mb-5" id="desc">A rich, smoky oud built for the nights you want to be remembered.</p>
+      <div class="flex items-center justify-center gap-5 mb-5">
+        <span class="text-base tracking-wide" id="price">R120</span>
+        <button class="cta-pill" id="ctaBtn">Add to bag</button>
+      </div>
+      <div class="dots mb-3" id="dots"></div>
+      <p class="swipe-hint"><span class="arrows">‹›</span> Swipe to preview the collection</p>
+    </div>
+
+    <button class="arrow-btn left-1" id="prevBtn" style="left:-8px;" aria-label="Previous fragrance">‹</button>
+    <button class="arrow-btn right-1" id="nextBtn" style="right:-8px;" aria-label="Next fragrance">›</button>
+  </div>
+</section>
+
+<!-- Fragrance Details: description left, picture right -->
+<section id="collection" class="py-28 bg-cream overflow-hidden">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-20">
+      <h2 class="font-voice text-4xl font-semibold mb-4">The Collection</h2>
+      <p class="text-lg text-gray-500">Four fragrances in the case right now</p>
+    </div>
+
+    <div class="space-y-24" id="detailRows"></div>
+  </div>
+</section>
+
+<!-- Why Scents -->
+<section id="why" class="py-28 bg-cream">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="font-voice text-4xl font-semibold mb-4">Why Shop Scents</h2>
+      <p class="text-lg text-gray-500">Three reasons people come back</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="p-10 rounded-3xl glass-card hover:border-gold transition-all">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-8" style="background:var(--black);">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-voice text-2xl font-semibold mb-4">Verified Stock</h3>
+        <p class="text-gray-600 leading-relaxed">Every bottle we sell is sourced from trusted suppliers and checked before it ships — no fakes, no guesswork.</p>
+      </div>
+      <div class="p-10 rounded-3xl glass-card hover:border-gold transition-all">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-8" style="background:var(--gold);">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 7h13l4 4v6h-2M3 7v10h2m8-10v10m-8 0a2 2 0 104 0m10 0a2 2 0 104 0"/></svg>
+        </div>
+        <h3 class="font-voice text-2xl font-semibold mb-4">Fast Local Delivery</h3>
+        <p class="text-gray-600 leading-relaxed">In stock in Cape Town, Durban and Johannesburg, with next-day delivery available on most orders.</p>
+      </div>
+      <div class="p-10 rounded-3xl glass-card border-gold hover:border-gold transition-all">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-8" style="background:var(--pink);">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 8c-1.5-2-4-2-5.5-.5S5 11 12 17c7-6 6.5-8 5.5-9.5S13.5 6 12 8z"/></svg>
+        </div>
+        <h3 class="font-voice text-2xl font-semibold mb-4">Real Prices</h3>
+        <p class="text-gray-600 leading-relaxed">No inflated luxury markups — just fragrances people love, priced so you'll actually wear them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-28 bg-ink relative overflow-hidden">
+  <div class="absolute inset-0" style="background: radial-gradient(circle at top right, rgba(199,160,82,0.15), transparent), radial-gradient(circle at bottom left, rgba(75,31,110,0.35), transparent);"></div>
+  <div class="max-w-3xl mx-auto px-6 text-center text-white relative z-10">
+    <h2 class="font-voice text-5xl font-semibold mb-6">Find Your Scent.</h2>
+    <p class="text-lg mb-10 text-gray-400">Four fragrances, four moods — one of them is going to be your new everyday.</p>
+    <button onclick="location.href='shop.html'" class="px-12 py-5 glass-button rounded-2xl font-medium text-lg tracking-wide">
+      Browse the Collection
+    </button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="visit" class="border-t border-white/10 bg-ink text-gray-400 pt-16 pb-8">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14 text-sm">
+      <div>
+        <h4 class="text-white font-semibold mb-4">Get to Know Us</h4>
+        <ul class="space-y-3">
+          <li><a href="#" class="hover:text-gold transition-colors">Our Story</a></li>
+          <li><a href="#" class="hover:text-gold transition-colors">How We Source</a></li>
+          <li><a href="#" class="hover:text-gold transition-colors">Delivery & Returns</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4">The Collection</h4>
+        <ul class="space-y-3">
+          <li><a href="product.html?id=oud-al-layl" class="hover:text-gold transition-colors">Oud Al Layl</a></li>
+          <li><a href="product.html?id=glamourous" class="hover:text-gold transition-colors">Glamourous</a></li>
+          <li><a href="product.html?id=rich-man" class="hover:text-gold transition-colors">Rich Man</a></li>
+          <li><a href="product.html?id=stunner" class="hover:text-gold transition-colors">Stunner</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4">Visit & Delivery</h4>
+        <ul class="space-y-3">
+          <li><a href="#" class="hover:text-gold transition-colors">Cape Town</a></li>
+          <li><a href="#" class="hover:text-gold transition-colors">Durban</a></li>
+          <li><a href="#" class="hover:text-gold transition-colors">Johannesburg</a></li>
+        </ul>
+      </div>
+      <div id="contact">
+        <h4 class="text-white font-semibold mb-4">Client Care</h4>
+        <ul class="space-y-3">
+          <li><a href="#" class="hover:text-gold transition-colors">Contact Us</a></li>
+          <li><a href="#" class="hover:text-gold transition-colors">Track an Order</a></li>
+          <li><a href="#" class="hover:text-gold transition-colors">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <p class="text-white font-semibold mb-1">Oud Al Layl · R120</p>
+        <p class="text-gray-500">Rose · Saffron<br>Oud</p>
+      </div>
+      <div>
+        <p class="text-white font-semibold mb-1">Glamourous · R200</p>
+        <p class="text-gray-500">Floral · Fruity<br>Feminine</p>
+      </div>
+      <div>
+        <p class="text-white font-semibold mb-1">Rich Man · R150</p>
+        <p class="text-gray-500">Fresh · Aquatic<br>Citrus</p>
+      </div>
+      <div>
+        <p class="text-white font-semibold mb-1">Stunner · R100</p>
+        <p class="text-gray-500">Floral · Fruity<br>Soft</p>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 mt-8 pt-6 text-center text-xs text-gray-500">
+      <div class="space-x-4 mb-3">
+        <a href="#" class="hover:text-gold transition-colors">Conditions of Use</a>
+        <a href="#" class="hover:text-gold transition-colors">Privacy Notice</a>
+        <a href="#" class="hover:text-gold transition-colors">Cookies Notice</a>
+        <a href="#" class="hover:text-gold transition-colors">Legal Notice</a>
+      </div>
+      <p>&copy; 2026 Scents.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+
+  const slides = [
+    { id:"oud-al-layl", name:"OUD AL LAYL", category:"Unisex", notes:"Rose · Saffron · Oud", desc:"A rich, smoky oud built for the nights you want to be remembered.", price:"R120", priceNum:120,
+      story:"A warm, oriental oud fragrance layered with rose and saffron over a deep, smoky agarwood base. Bold and long-lasting — this is the bottle people ask about.",
+      img:"Screenshot 2026-05-03 150950.png" /* TODO: add Oud Al Layl bottle image path/URL */,
+      theme:{a:"#0B0B0D", b:"#1C1712", c:"#2B220F", ink:"#F3EEDF", accent:"#D4AF37", sub:"#B9AE93"} },
+    { id:"glamourous", name:"GLAMOUROUS", category:"Women", notes:"Floral · Fruity · Feminine", desc:"Bright and feminine, with enough depth to carry through the evening.", price:"R200", priceNum:200,
+      story:"A bold floral-fruity eau de parfum in a statement pink bottle. Sweet on first spray, with a bouquet that lingers well past the first hour.",
+      img:"Screenshot 2026-05-03 150950.png" /* TODO: add Glamourous bottle image path/URL */,
+      theme:{a:"#2B0F1C", b:"#7D3352", c:"#D6698C", ink:"#FBEAF0", accent:"#E4A6BE", sub:"#e7c3d2"} },
+    { id:"rich-man", name:"RICH MAN", category:"Men", notes:"Fresh · Aquatic · Citrus", desc:"A clean, everyday pour homme that layers well under anything.", price:"R150", priceNum:150,
+      story:"A crisp, fresh pour homme built on aquatic and citrus notes. Easy to wear year-round — the fragrance you reach for when you can't decide.",
+      img:"Screenshot 2026-05-03 150950.png" /* TODO: add Rich Man bottle image path/URL */,
+      theme:{a:"#FBF7EE", b:"#F3E9D2", c:"#E7D5A8", ink:"#241C10", accent:"#9C7A2E", sub:"#7a6b4d"} },
+    { id:"stunner", name:"STUNNER", category:"Women", notes:"Floral · Fruity · Soft", desc:"Light enough for daytime, sweet enough to be remembered.", price:"R100", priceNum:100,
+      story:"A soft, playful floral fragrance with a fruity edge. Our most affordable bottle in the case, and one of the easiest to fall for.",
+      img:"Screenshot 2026-05-03 150950.png" /* TODO: add Stunner bottle image path/URL */,
+      theme:{a:"#2A1140", b:"#4B1F6E", c:"#160A22", ink:"#F3EAF9", accent:"#C7A052", sub:"#C9B7D8"} }
+  ];
+
+  /* ---------- shared cart store (localStorage) ---------- */
+  function getCart(){ try{ return JSON.parse(localStorage.getItem('scents_cart')||'[]'); }catch(e){ return []; } }
+  function saveCart(c){ try{ localStorage.setItem('scents_cart', JSON.stringify(c)); }catch(e){} }
+  function addToCart(id, qty=1){
+    const c = getCart();
+    const item = c.find(i=>i.id===id);
+    if(item) item.qty += qty; else c.push({id, qty});
+    saveCart(c);
+    updateCartBadge();
+  }
+  function cartCount(){ return getCart().reduce((s,i)=>s+i.qty,0); }
+  function updateCartBadge(){ document.querySelectorAll('.cart-count').forEach(el=> el.textContent = cartCount()); }
+
+  const stage = document.getElementById('home');
+  const bottleStage = document.getElementById('bottleStage');
+  const dotsEl = document.getElementById('dots');
+
+  let index = 0, startX = null, dragging = false;
+
+  function buildBottles(){
+    bottleStage.innerHTML = slides.map((s,i)=>
+      `<div class="bottle-slot" data-i="${i}">${s.img
+        ? `<img src="${s.img}" alt="${s.name} bottle">`
+        : `<div class="img-placeholder">Add image for<br>${s.name}</div>`}</div>`
+    ).join('');
+  }
+  function buildDots(){
+    dotsEl.innerHTML = slides.map((_,i)=> `<button class="dot" data-i="${i}" aria-label="Show fragrance ${i+1}"></button>`).join('');
+    dotsEl.querySelectorAll('.dot').forEach(d=> d.addEventListener('click', ()=> goTo(parseInt(d.dataset.i))));
+  }
+  function applyTheme(s){
+    stage.style.setProperty('--bg-a', s.theme.a);
+    stage.style.setProperty('--bg-b', s.theme.b);
+    stage.style.setProperty('--bg-c', s.theme.c);
+    stage.style.setProperty('--hero-ink', s.theme.ink);
+    stage.style.setProperty('--hero-accent', s.theme.accent);
+    stage.style.setProperty('--hero-sub', s.theme.sub);
+  }
+  function render(triggerSteam){
+    const s = slides[index];
+    document.getElementById('eyebrow').textContent = `0${index+1} / 0${slides.length}`;
+    document.getElementById('fragranceName').textContent = s.name;
+    document.getElementById('notes').textContent = s.notes;
+    document.getElementById('desc').textContent = s.desc;
+    document.getElementById('price').textContent = s.price;
+    bottleStage.querySelectorAll('.bottle-slot').forEach(el=>{
+      const i = parseInt(el.dataset.i);
+      el.classList.remove('active','prev','next');
+      if(i === index) el.classList.add('active');
+      else if(i === (index - 1 + slides.length) % slides.length) el.classList.add('prev');
+      else if(i === (index + 1) % slides.length) el.classList.add('next');
+    });
+    dotsEl.querySelectorAll('.dot').forEach(d=> d.classList.toggle('active', parseInt(d.dataset.i) === index));
+    applyTheme(s);
+    if(triggerSteam){
+      stage.classList.remove('steam-active');
+      void stage.offsetWidth;
+      stage.classList.add('steam-active');
+    }
+  }
+  function goTo(i){
+    if(i === index) return;
+    index = ((i % slides.length) + slides.length) % slides.length;
+    render(true);
+  }
+  function next(){ goTo(index + 1); }
+  function prev(){ goTo(index - 1); }
+
+  document.getElementById('nextBtn').addEventListener('click', next);
+  document.getElementById('prevBtn').addEventListener('click', prev);
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowRight') next();
+    if(e.key === 'ArrowLeft') prev();
+  });
+
+  const carousel = document.getElementById('carousel');
+  carousel.addEventListener('pointerdown', (e)=>{ dragging = true; startX = e.clientX; });
+  carousel.addEventListener('pointerup', (e)=>{
+    if(!dragging) return;
+    dragging = false;
+    const dx = e.clientX - startX;
+    if(Math.abs(dx) > 50){ if(dx < 0) next(); else prev(); }
+  });
+  carousel.addEventListener('pointercancel', ()=> dragging = false);
+  carousel.addEventListener('pointerleave', ()=> dragging = false);
+
+  document.getElementById('ctaBtn').addEventListener('click', function(){
+    addToCart(slides[index].id, 1);
+    this.textContent = 'Added ✓';
+    setTimeout(()=>{ this.textContent = 'Add to bag'; }, 1400);
+  });
+
+  function buildDetailRows(){
+    const wrap = document.getElementById('detailRows');
+    wrap.innerHTML = slides.map((s,i)=> `
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-xs tracking-[.3em] uppercase" style="color:${s.theme.accent==='#F3E9D2'?'#9C7A2E':s.theme.accent}">0${i+1} / 04</span>
+          <h3 class="font-voice text-4xl font-semibold mt-3 mb-3">${s.name}</h3>
+          <p class="text-xs tracking-[.14em] uppercase text-gray-500 mb-5">${s.notes}</p>
+          <p class="text-gray-600 leading-relaxed mb-6">${s.story}</p>
+          <div class="flex items-center gap-5 flex-wrap">
+            <span class="text-base tracking-wide font-medium">${s.price}</span>
+            <button class="cta-pill" style="background:${s.theme.a==='#FBF7EE'?'#241C10':s.theme.a}; color:#fff;" onclick="goTo(${i}); document.getElementById('home').scrollIntoView({behavior:'smooth'});">Preview in hero</button>
+            <a href="product.html?id=${s.id}" class="text-sm underline underline-offset-4 hover:text-gold">View full details</a>
+          </div>
+        </div>
+        <div class="detail-pic" style="background: radial-gradient(circle at 40% 30%, ${s.theme.b}22, transparent 65%), linear-gradient(160deg, ${s.theme.a}0d, ${s.theme.c}14);">
+          ${s.img
+            ? `<img src="${s.img}" alt="${s.name} bottle">`
+            : `<div class="img-placeholder">Add image for<br>${s.name}</div>`}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  buildBottles();
+  buildDots();
+  buildDetailRows();
+  render(false);
+  updateCartBadge();
+</script>
+</body>
+</html>

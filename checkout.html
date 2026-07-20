@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Checkout | Scents</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --cream:#FAF7F1; --ink:#1A1418; --black:#0E0C10; --gold:#C7A052; }
+  *{box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif; background:var(--cream); color:var(--ink);}
+  .font-voice{font-family:'Cormorant Garamond', serif;}
+  .bg-ink{background-color:var(--black);}
+  .text-gold{color:var(--gold);}
+  .bg-gold{background-color:var(--gold);}
+  input, select{
+    width:100%; padding:.7rem .9rem; border:1px solid rgba(0,0,0,.12); border-radius:10px;
+    font-family:'Jost',sans-serif; font-size:14px; background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  input:focus, select:focus{ outline:none; border-color: var(--gold); }
+  label{ font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:#6b6066; display:block; margin-bottom:6px; }
+  .field{ margin-bottom:16px; }
+  .pay-option{
+    border:1px solid rgba(0,0,0,.12); border-radius:12px; padding:14px 16px;
+    background: rgba(255,255,255,0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    display:flex; align-items:center; gap:10px; cursor:pointer; transition: border-color .2s ease;
+  }
+  .pay-option:has(input:checked){ border-color: var(--gold); background: rgba(199,160,82,.1); }
+  .cta-pill{
+    font-family:'Jost',sans-serif; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase;
+    border:none; padding:16px 30px; border-radius:999px; cursor:pointer; color:#fff; background:var(--ink);
+    width:100%; transition: transform 220ms ease, opacity 220ms ease;
+  }
+  .cta-pill:hover{ transform: translateY(-2px); opacity:.92; }
+  .glass-dark{
+    background: rgba(14,12,16,0.55);
+    backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .glass{
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 8px 32px rgba(20,16,20,0.06);
+  }
+  .top-bar{ background:var(--black); color:#cfc7cc; font-size:12px; }
+</style>
+</head>
+<body class="selection:bg-purple-800 selection:text-white">
+
+<!-- Top bar -->
+<div class="top-bar fixed top-0 left-0 w-full z-50 py-2 px-6">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <span>Secure checkout · Delivering across South Africa</span>
+    <span class="hidden sm:flex gap-4"><a href="index.html#contact" class="hover:text-gold">Contact Us</a></span>
+  </div>
+</div>
+
+<header class="glass-dark fixed left-0 w-full z-40" style="top:32px;">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="index.html" class="font-voice text-2xl tracking-wide text-white">SCENTS<span class="text-gold">.</span></a>
+    <a href="cart.html" class="text-white text-sm hover:text-gold">← Back to Cart</a>
+  </div>
+</header>
+
+<main class="pt-40 pb-28 px-6 bg-cream min-h-screen">
+  <div class="max-w-5xl mx-auto">
+    <h1 class="font-voice text-4xl font-semibold mb-2">Checkout</h1>
+    <p class="text-xs tracking-[.2em] uppercase text-gray-500 mb-10">
+      <a href="index.html" class="hover:text-gold">Home</a> / <a href="cart.html" class="hover:text-gold">Cart</a> / Checkout
+    </p>
+
+    <div id="checkoutRoot"></div>
+  </div>
+</main>
+
+<footer class="border-t border-white/10 bg-ink text-gray-400 pt-10 pb-8">
+  <div class="max-w-6xl mx-auto px-6 text-center text-xs text-gray-500">
+    <p>&copy; 2026 Scents.</p>
+  </div>
+</footer>
+
+<script>
+  const PRODUCTS = [
+    { id:"oud-al-layl", name:"Oud Al Layl", price:120 },
+    { id:"glamourous", name:"Glamourous", price:200 },
+    { id:"rich-man", name:"Rich Man", price:150 },
+    { id:"stunner", name:"Stunner", price:100 }
+  ];
+  const DELIVERY_FLAT = 60;
+  const FREE_DELIVERY_THRESHOLD = 500;
+
+  function getCart(){ try{ return JSON.parse(localStorage.getItem('scents_cart')||'[]'); }catch(e){ return []; } }
+  function saveCart(c){ try{ localStorage.setItem('scents_cart', JSON.stringify(c)); }catch(e){} }
+
+  const root = document.getElementById('checkoutRoot');
+  const cart = getCart();
+
+  if(cart.length === 0){
+    root.innerHTML = `
+      <div class="text-center py-20">
+        <p class="text-gray-500 mb-6">Your cart is empty — add something before checking out.</p>
+        <a href="shop.html" class="inline-block cta-pill" style="width:auto; padding-left:2.5rem; padding-right:2.5rem;">Shop Fragrances</a>
+      </div>`;
+  } else {
+    const items = cart.map(ci => ({ ...PRODUCTS.find(p=>p.id===ci.id), qty: ci.qty }));
+    const subtotal = items.reduce((s,i)=> s + i.price * i.qty, 0);
+    const delivery = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FLAT;
+    const total = subtotal + delivery;
+
+    root.innerHTML = `
+      <form id="checkoutForm" class="grid md:grid-cols-3 gap-10 items-start">
+        <div class="md:col-span-2 space-y-8">
+          <div>
+            <h2 class="font-voice text-2xl font-semibold mb-4">Shipping Details</h2>
+            <div class="grid sm:grid-cols-2 gap-x-4">
+              <div class="field"><label>Full Name</label><input type="text" required></div>
+              <div class="field"><label>Phone Number</label><input type="tel" required></div>
+              <div class="field sm:col-span-2"><label>Email</label><input type="email" required></div>
+              <div class="field sm:col-span-2"><label>Street Address</label><input type="text" required></div>
+              <div class="field">
+                <label>City</label>
+                <select required>
+                  <option value="">Select a city</option>
+                  <option>Cape Town</option>
+                  <option>Durban</option>
+                  <option>Johannesburg</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field"><label>Postal Code</label><input type="text" required></div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="font-voice text-2xl font-semibold mb-4">Payment Method</h2>
+            <div class="space-y-3">
+              <label class="pay-option"><input type="radio" name="payment" value="card" checked> Card Payment</label>
+              <label class="pay-option"><input type="radio" name="payment" value="eft"> EFT / Bank Transfer</label>
+              <label class="pay-option"><input type="radio" name="payment" value="cod"> Cash on Delivery</label>
+            </div>
+            <p class="text-xs text-gray-400 mt-3">Payment is processed securely at the next step once a payment provider is connected.</p>
+          </div>
+        </div>
+
+        <div class="glass rounded-2xl p-6 sticky" style="top:108px;">
+          <h2 class="font-voice text-2xl font-semibold mb-5">Order Summary</h2>
+          <div class="space-y-2 text-sm text-gray-600 mb-4">
+            ${items.map(i=> `<div class="flex justify-between"><span>${i.name} × ${i.qty}</span><span>R${i.price * i.qty}</span></div>`).join('')}
+          </div>
+          <div class="space-y-2 text-sm text-gray-600 border-t border-black/10 pt-4 mb-4">
+            <div class="flex justify-between"><span>Subtotal</span><span>R${subtotal}</span></div>
+            <div class="flex justify-between"><span>Delivery</span><span>${delivery === 0 ? 'Free' : 'R' + delivery}</span></div>
+          </div>
+          <div class="flex justify-between font-semibold text-lg border-t border-black/10 pt-4 mb-6">
+            <span>Total</span><span>R${total}</span>
+          </div>
+          <button type="submit" class="cta-pill">Place Order</button>
+        </div>
+      </form>
+      <div id="confirmation" class="hidden text-center py-20"></div>
+    `;
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      saveCart([]);
+      this.classList.add('hidden');
+      const conf = document.getElementById('confirmation');
+      conf.classList.remove('hidden');
+      conf.innerHTML = `
+        <div class="text-5xl mb-4">✓</div>
+        <h2 class="font-voice text-3xl font-semibold mb-3">Order Received</h2>
+        <p class="text-gray-600 max-w-md mx-auto mb-8">Thanks for shopping with Scents. We'll be in touch shortly to confirm your delivery details.</p>
+        <a href="shop.html" class="inline-block cta-pill" style="width:auto; padding-left:2.5rem; padding-right:2.5rem;">Continue Shopping</a>
+      `;
+    });
+  }
+</script>
+</body>
+</html>
